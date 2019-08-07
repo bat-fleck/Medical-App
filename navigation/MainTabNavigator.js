@@ -4,8 +4,9 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
-import LinksScreen from '../screens/LinksScreen';
-import SettingsScreen from '../screens/SettingsScreen';
+import SocialCircle from '../screens/SocialCircle';
+import Mappy from '../screens/Map';
+import Scan from '../screens/Scan';
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
@@ -27,7 +28,7 @@ HomeStack.navigationOptions = {
       name={
         Platform.OS === 'ios'
           ? `ios-information-circle${focused ? '' : '-outline'}`
-          : 'md-information-circle'
+          : 'md-analytics'
       }
     />
   ),
@@ -37,39 +38,58 @@ HomeStack.path = '';
 
 const LinksStack = createStackNavigator(
   {
-    Links: LinksScreen,
+    Links: SocialCircle,
   },
   config
 );
 
 LinksStack.navigationOptions = {
-  tabBarLabel:<Text style={{color:'#7f2f31',textAlign:'center'}}>Scan</Text>,
+  tabBarLabel:<Text style={{color:'#7f2f31',textAlign:'center'}}>SocialCircle</Text>,
   tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'} />
+    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-link' : 'md-people'} />
   ),
 };
+
+
 
 LinksStack.path = '';
 
 const SettingsStack = createStackNavigator(
   {
-    Settings: SettingsScreen,
+    Settings: Scan,
   },
   config
 );
 
 SettingsStack.navigationOptions = {
-  tabBarLabel: <Text style={{color:'#7f2f31',textAlign:'center'}}>Social Circle</Text>,
+  tabBarLabel: <Text style={{color:'#7f2f31',textAlign:'center'}}>Scan</Text>,
   tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-options' : 'md-options'} />
+    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-options' : 'md-qr-scanner'} />
   ),
 };
 
 SettingsStack.path = '';
 
+const MapStack = createStackNavigator(
+  {
+    Map: Mappy,
+  },
+  config
+);
+
+MapStack.navigationOptions = {
+  tabBarLabel: <Text style={{color:'#7f2f31',textAlign:'center'}}>Map</Text>,
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-options' : 'md-map'} />
+  ),
+};
+
+MapStack.path = '';
+
 const tabNavigator = createBottomTabNavigator({
   HomeStack,
   LinksStack,
+  MapStack,
   SettingsStack,
 });
 

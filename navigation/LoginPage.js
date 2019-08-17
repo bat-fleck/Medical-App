@@ -6,7 +6,7 @@ export default class LoginPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-        };'#cc4b4e'
+        };
     }
 
     render() {
@@ -77,11 +77,3 @@ const styles=StyleSheet.create({
 		
 	},
 })
-{/* <Text
-                    style={{
-                    backgroundColor: 'transparent',
-                    fontSize: 15,
-                    color: '#fff',
-                    }}>
-                LOGIN
-                </Text> */}

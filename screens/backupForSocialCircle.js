@@ -1,178 +1,78 @@
-      
-import React, { PureComponent } from 'react';
-import { View, SafeAreaView, TouchableOpacity, Text } from 'react-native';
-import { StreamChat } from 'stream-chat';
-import {
-  Avatar,
-  Chat,
-  Channel,
-  MessageList,
-  MessageInput,
-  ChannelList,
-  IconBadge,
-} from 'stream-chat-expo';
-import { createAppContainer, createStackNavigator } from 'react-navigation';
-import truncate from 'lodash/truncate';
+import React, { Component } from 'react';
+import { Platform, Text, View, StyleSheet } from 'react-native';
+import Constants from 'expo-constants';
+import MapView from 'react-native-maps'
+import * as Location from 'expo-location';
+import * as Permissions from 'expo-permissions';
 
-const chatClient = new StreamChat('f8wwud5et5jd');
-const userToken =
-  'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiYW5jaWVudC1tYXRoLTcifQ.2jP3_2hiY84Kg-StOtFNBtummLT3WHp_nBkS4hMD0YQ';
 
-const user = {
-  id: 'ancient-math-7',
-  name: 'Ancient math',
-  image:
-    'https://stepupandlive.files.wordpress.com/2014/09/3d-animated-frog-image.jpg',
-};
-
-chatClient.setUser(user, userToken);
-
-class CustomChannelPreview extends PureComponent {
-	static navigationOptions = {
-        header: null
-	}
-	
-  channelPreviewButton = React.createRef();
-
-  onSelectChannel = () => {
-    this.props.setActiveChannel(this.props.channel);
+export default class App extends Component {
+  state = {
+    mapRegion: { latitude: 37.78825, longitude: -122.4324, latitudeDelta: 0.0922, longitudeDelta: 0.0421 },
+    locationResult: null,
+    location: {coords: { latitude: 37.78825, longitude: -122.4324}},
   };
 
-  render() {
-    const { channel } = this.props;
-    const unreadCount = channel.countUnread();
+  componentDidMount() {
+    this._getLocationAsync();
+  }
 
+  _handleMapRegionChange = mapRegion => {
+    this.setState({ mapRegion });
+  };
+
+  _getLocationAsync = async () => {
+   let { status } = await Permissions.askAsync(Permissions.LOCATION);
+   if (status !== 'granted') {
+     this.setState({
+       locationResult: 'Permission to access location was denied',
+       location,
+     });
+   }
+
+   let location = await Location.getCurrentPositionAsync({});
+   this.setState({ locationResult: JSON.stringify(location), location, });
+ };
+
+  render() {
     return (
-      <TouchableOpacity
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          borderBottomColor: '#EBEBEB',
-          borderBottomWidth: 1,
-          padding: 10,
-        }}
-        onPress={this.onSelectChannel}
-      >
-        <Avatar image={channel.data.image} size={40} />
-        <View
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            flex: 1,
-            paddingLeft: 10,
-          }}
+      <View style={styles.container}>
+        <MapView
+          //onMapReady={()=>this.setState({latitude: this.state.location.coords.latitude, longitude: this.state.location.coords.longitude, latitudeDelta: 0.0922, longitudeDelta: 0.0421 })}
+          style={{ alignSelf: 'stretch', height: 200 }}
+          initalregion={{ latitude: this.state.location.coords.latitude, longitude: this.state.location.coords.longitude, latitudeDelta: 0.0922, longitudeDelta: 0.0421 }}
+          onRegionChange={this._handleMapRegionChange}
+          region={this.stamapRegionte.mapRegion}
         >
-          <View
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-            }}
-          >
-            <Text
-              style={{
-                fontWeight: unreadCount > 0 ? 'bold' : 'normal',
-                fontSize: 14,
-                flex: 9,
-              }}
-              ellipsizeMode="tail"
-              numberOfLines={1}
-            >
-              {channel.data.name}
-            </Text>
-            <IconBadge unread={unreadCount} showNumber>
-              <Text
-                style={{
-                  color: '#767676',
-                  fontSize: 11,
-                  flex: 3,
-                  textAlign: 'right',
-                }}
-              >
-                {this.props.latestMessage.created_at}
-              </Text>
-            </IconBadge>
-          </View>
-        </View>
-      </TouchableOpacity>
+    <MapView.Marker
+      coordinate={this.state.location.coords}
+      title="My Marker"
+      description="Some description"
+    />
+        </MapView>
+      
+        <Text>
+          Location: {this.state.locationResult}
+        </Text>
+      
+      </View>
     );
   }
 }
 
-class ChannelListScreen extends PureComponent {
-	static navigationOptions = {
-        header: null
-    }
-
-  render() {
-    return (
-      <SafeAreaView>
-        <Chat client={chatClient}>
-          <View style={{ display: 'flex', height: '100%', padding: 10 }}>
-            <ChannelList
-              filters={{ type: 'messaging', members: { $in: ['ancient-math-7'] } }}
-              sort={{ last_message_at: -1 }}
-              Preview={CustomChannelPreview}
-              onSelect={(channel) => {
-                this.props.navigation.navigate('Channel', {
-                  channel,
-                });
-              }}
-            />
-          </View>
-        </Chat>
-      </SafeAreaView>
-    );
-  }
-}
-
-class ChannelScreen extends React.Component {
-  static navigationOptions = ({ navigation }) => {
-    const channel = navigation.getParam('channel');
-    return {
-      headerTitle: (
-        <Text style={{ fontWeight: 'bold' }}>{channel.data.name}</Text>
-      ),
-    };
-  };
-
-  render() {
-    const { navigation } = this.props;
-    const channel = navigation.getParam('channel');
-
-    return (
-      <SafeAreaView>
-        <Chat client={chatClient}>
-          <Channel client={chatClient} channel={channel}>
-            <View style={{ display: 'flex', height: '100%' }}>
-              <MessageList />
-              <MessageInput />
-            </View>
-          </Channel>
-        </Chat>
-      </SafeAreaView>
-    );
-  }
-}
-
-const RootStack = createStackNavigator(
-  {
-    ChannelList: {
-      screen: ChannelListScreen,
-    },
-    Channel: {
-      screen: ChannelScreen,
-    },
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    //paddingTop: Constants.statusBarHeight,
+    backgroundColor: '#ecf0f1',
   },
-  {
-    initialRouteName: 'ChannelList',
+  paragraph: {
+    margin: 24,
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: '#34495e',
   },
-);
-
-const AppContainer = createAppContainer(RootStack);
-
-export default class App extends React.Component {
-  render() {
-    return <AppContainer />;
-  }
-}
+});

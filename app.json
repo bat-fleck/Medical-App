@@ -17,6 +17,14 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "android": {
+      "package": "com.nardog.vishnu",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyAGXGX1F0yZNTVEEHssFA6eKyGXtb77F-c"
+        }
+      }
+    },
     "updates": {
       "fallbackToCacheTimeout": 0
     },

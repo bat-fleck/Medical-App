@@ -7,92 +7,162 @@ import HomeScreen from '../screens/HomeScreen';
 import SocialCircle from '../screens/SocialCircle';
 import Mappy from '../screens/Map';
 import Scan from '../screens/Scan';
+import Forum from '../screens/Forum';
+import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
 
-const config = Platform.select({
-  web: { headerMode: 'screen' },
-  default: {},
+
+
+export default createMaterialBottomTabNavigator({
+  	Home: { 
+		screen: HomeScreen,
+		navigationOptions:{
+			tabBarIcon:<TabBarIcon name='md-analytics' />,
+		},
+		
+	},
+  	Scan: { 
+		screen: Scan,
+		navigationOptions:{
+			tabBarIcon:<TabBarIcon activeColor="#FF69B4" name='md-qr-scanner' />,
+		}
+	},
+  	Forum: {
+		screen: Forum,
+		navigationOptions:{
+			tabBarIcon:<TabBarIcon name='md-paw' />,
+		}
+	},
+  	Map: {
+		screen: Mappy,
+		navigationOptions:{
+			tabBarIcon:<TabBarIcon name='md-map' />,
+		}
+	},
+  	DM:{ 
+		screen:SocialCircle,
+		navigationOptions:{
+			tabBarIcon:<TabBarIcon name='md-qr-scanner' />,
+
+		}
+	}
+}, {
+  initialRouteName: 'Home',
+  activeColor: '#f0edf6',
+  labeled:'false',
+  inactiveColor: '#3e2465',
+  barStyle: { 
+				backgroundColor: '#ff9966',
+				height: 60,
+				
+				
+			},
+
 });
 
-const HomeStack = createStackNavigator(
-  {
-    Home: HomeScreen,
-  },
-  config
-);
+// const config = Platform.select({
+//   web: { headerMode: 'screen' },
+//   default: {},
+// });
 
-HomeStack.navigationOptions = {
-  tabBarLabel:<Text style={{color:'#7f2f31',textAlign:'center'}}>Home</Text>,
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name={
-        Platform.OS === 'ios'
-          ? `ios-information-circle${focused ? '' : '-outline'}`
-          : 'md-analytics'
-      }
-    />
-  ),
-};
+// const HomeStack = createStackNavigator(
+//   {
+//     Home: HomeScreen,
+//   },
+//   config
+// );
 
-HomeStack.path = '';
+// HomeStack.navigationOptions = {
+//   tabBarLabel:<Text style={{color:'#7f2f31',textAlign:'center'}}>Home</Text>,
+//   tabBarIcon: ({ focused }) => (
+//     <TabBarIcon
+//       focused={focused}
+//       name={
+//         Platform.OS === 'ios'
+//           ? `ios-information-circle${focused ? '' : '-outline'}`
+//           : 'md-analytics'
+//       }
+//     />
+//   ),
+// };
 
-const LinksStack = createStackNavigator(
-  {
-    Links: SocialCircle,
-  },
-  config
-);
+// HomeStack.path = '';
 
-LinksStack.navigationOptions = {
-  tabBarLabel:<Text style={{color:'#7f2f31',textAlign:'center'}}>SocialCircle</Text>,
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-link' : 'md-people'} />
-  ),
-};
+// const LinksStack = createStackNavigator(
+//   {
+//     Links: SocialCircle,
+//   },
+//   config
+// );
+
+// LinksStack.navigationOptions = {
+//   tabBarLabel:<Text style={{color:'#7f2f31',textAlign:'center'}}>SocialCircle</Text>,
+//   tabBarIcon: ({ focused }) => (
+//     <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-link' : 'md-people'} />
+//   ),
+// };
 
 
 
-LinksStack.path = '';
+// LinksStack.path = '';
 
-const SettingsStack = createStackNavigator(
-  {
-    Settings: Scan,
-  },
-  config
-);
+// const ForumStack = createStackNavigator(
+//   {
+//     Forum: Forum,
+//   },
+//   config
+// );
 
-SettingsStack.navigationOptions = {
-  tabBarLabel: <Text style={{color:'#7f2f31',textAlign:'center'}}>Scan</Text>,
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-options' : 'md-qr-scanner'} />
-  ),
-};
+// ForumStack.navigationOptions = {
+//   tabBarLabel:<Text style={{color:'#7f2f31',textAlign:'center'}}>Forum</Text>,
+//   tabBarIcon: ({ focused }) => (
+//     <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-link' : 'md-paw'} />
+//   ),
+// };
 
-SettingsStack.path = '';
 
-const MapStack = createStackNavigator(
-  {
-    Map: Mappy,
-  },
-  config
-);
 
-MapStack.navigationOptions = {
-  tabBarLabel: <Text style={{color:'#7f2f31',textAlign:'center'}}>Map</Text>,
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-options' : 'md-map'} />
-  ),
-};
+// ForumStack.path = '';
 
-MapStack.path = '';
+// const SettingsStack = createStackNavigator(
+//   {
+//     Settings: Scan,
+//   },
+//   config
+// );
 
-const tabNavigator = createBottomTabNavigator({
-  HomeStack,
-  LinksStack,
-  MapStack,
-  SettingsStack,
-});
+// SettingsStack.navigationOptions = {
+//   tabBarLabel: <Text style={{color:'#7f2f31',textAlign:'center'}}>Scan</Text>,
+//   tabBarIcon: ({ focused }) => (
+//     <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-options' : 'md-qr-scanner'} />
+//   ),
+// };
 
-tabNavigator.path = '';
+// SettingsStack.path = '';
 
-export default tabNavigator;
+// const MapStack = createStackNavigator(
+//   {
+//     Map: Mappy,
+//   },
+//   config
+// );
+
+// MapStack.navigationOptions = {
+//   tabBarLabel: <Text style={{color:'#7f2f31',textAlign:'center'}}>Map</Text>,
+//   tabBarIcon: ({ focused }) => (
+//     <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-options' : 'md-map'} />
+//   ),
+// };
+
+// MapStack.path = '';
+
+// const tabNavigator = createBottomTabNavigator({
+//   HomeStack,
+//   LinksStack,
+//   MapStack,
+//   SettingsStack,
+//   ForumStack,
+// });
+
+// tabNavigator.path = '';
+
+// export default tabNavigator;

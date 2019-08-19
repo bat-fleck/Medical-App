@@ -6,6 +6,7 @@ import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import SocialCircle from '../screens/SocialCircle';
 import Mappy from '../screens/Map';
+import Pedo from "../screens/Pedo"
 import Scan from '../screens/Scan';
 import Forum from '../screens/Forum';
 import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
@@ -23,7 +24,7 @@ export default createMaterialBottomTabNavigator({
   	Scan: { 
 		screen: Scan,
 		navigationOptions:{
-			tabBarIcon:<TabBarIcon activeColor="#FF69B4" name='md-qr-scanner' />,
+			tabBarIcon:<TabBarIcon name='md-qr-scanner' />,
 		}
 	},
   	Forum: {
@@ -38,21 +39,27 @@ export default createMaterialBottomTabNavigator({
 			tabBarIcon:<TabBarIcon name='md-map' />,
 		}
 	},
+	Steps:{
+		screen:Pedo,
+		navigationOptions:{
+			tabBarIcon:<TabBarIcon name="md-heart" />
+		}
+	},
   	DM:{ 
 		screen:SocialCircle,
 		navigationOptions:{
-			tabBarIcon:<TabBarIcon name='md-qr-scanner' />,
+			tabBarIcon:<TabBarIcon name='md-chatbubbles' />,
 
 		}
 	}
 }, {
   initialRouteName: 'Home',
   activeColor: '#f0edf6',
-  labeled:'false',
+  //labeled:'false',
   inactiveColor: '#3e2465',
   barStyle: { 
 				backgroundColor: '#ff9966',
-				height: 60,
+				height:65,
 				
 				
 			},

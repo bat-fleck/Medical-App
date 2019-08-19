@@ -29,7 +29,7 @@ chatClient.setUser(user, userToken);
 
 class CustomChannelPreview extends PureComponent {
 	static navigationOptions = {
-        header: null
+    title:"Direct Messages"
 	}
 	
   channelPreviewButton = React.createRef();

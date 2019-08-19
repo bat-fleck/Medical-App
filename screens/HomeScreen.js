@@ -1,4 +1,6 @@
 import React from 'react';
+import { Notifications } from 'expo';
+import * as Permissions from 'expo-permissions';
 import {
   Image,
   Platform,
@@ -12,15 +14,12 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Constants from 'expo';
 import Card from './CardDr';
 import Schedule from './CardSchedule';
-
-//import { MonoText } from '../components/StyledText';
-
 export default class Home extends React.Component{
 	static navigationOptions = {
-        header: null
+        header: null,
     }
 	state={
-
+		key:1,
 	}
 
 	render(){

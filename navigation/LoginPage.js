@@ -1,20 +1,22 @@
 import React, { Component } from 'react';
-import { View, Text,TouchableOpacity,TextInput,StyleSheet,KeyboardAvoidingView } from 'react-native';
+import { View,Image,Text,TouchableOpacity,TextInput,StyleSheet,KeyboardAvoidingView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 export default class LoginPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
+       
         };
     }
 
     render() {
         return(
-            <LinearGradient colors={['#ff9966','#cc4b4e']} style={{ padding: 15, alignItems: 'center', borderRadius: 5,flex:1 }}>
+            <LinearGradient colors={['#f64f59','#c471ed','#12c2e9']} start={['0.5','0.3']} style={{ padding: 15, alignItems: 'center', borderRadius: 5,flex:1 }}>
 
                 <View style={{flex:6,alignItems:'center',justifyContent:'center'}}>
-                    <Text style={{color:'white',fontSize:35}}>LIGMA</Text> 
+                    <Image style={{width:150,height:150}}source={require('../assets/images/charity(2).png')}/>
+                    <Text style={{color:'white',fontSize:40,fontWeight:'bold'}}>Take-a-Care</Text> 
                 </View>
 
                 
@@ -55,7 +57,7 @@ const styles=StyleSheet.create({
         color:'white'
     },
     texty:{
-		color:"#cc4b4e",
+		color:"#12c2e9",
 		alignSelf:'center',
 		fontSize:20,
 		fontWeight:'bold'

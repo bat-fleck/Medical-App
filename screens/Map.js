@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Platform, Text, View, StyleSheet,ActivityIndicator } from 'react-native';
 import Constants from 'expo-constants';
 import * as Location from 'expo-location';
-import pin from '../assets/images/placeholder.png'
+import pin from '../assets/images/pin.png'
 import * as Permissions from 'expo-permissions';
 import MapView from 'react-native-maps';
 //import console = require('console');
@@ -49,8 +49,8 @@ export default class App extends Component {
       <MapView style={{flex:1}} initialRegion={{
         latitude: this.state.location.coords.latitude,
         longitude: this.state.location.coords.longitude,
-        latitudeDelta: 0.0922/2.5,
-        longitudeDelta: 0.0421/2.5, 
+        latitudeDelta: 0.3/60,
+        longitudeDelta: 0.3/60, 
         pinColor:'teal'
       }}>
       
